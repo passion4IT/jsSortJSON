@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Javascript sorting</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h5 class="text-success text-center"> Sorting</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-primary">
+                        Name &nbsp;
+                        <span class="arrow-down" onclick="toggleArrow(this);"><i class="fas fa-arrow-down"></i></span>
+                        <span class="arrow-up" style="display: none;" onclick="toggleArrow(this);"><i class="fas fa-arrow-up"></i></span>
+                    </th>
+                    <th class="text-primary">
+                        Age
+                    </th>
+                </tr>
+            </thead>
+            <tbody id ="json-content">
+
+            </tbody>
+        </table>
+    </div>
+<script type="text/javascript">
+    var json = [
+        {'name': 'John', 'age': 25},
+        {'name': 'Dane', 'age': 32},
+        {'name': 'Kristi', 'age': 23},
+        {'name': 'Ritika', 'age': 30}
+    ]
+
+    appendJson(json)
+
+    // toggle arrow for sorting
+    function toggleArrow(event) {
+        event.style.display = 'none'
+        if(event.classList.value == 'arrow-down') {
+            document.getElementsByClassName('arrow-up')[0].style.display = ''
+            json = json.sort(function(a,b) {
+                var x = a['name']
+                var y = b['name']
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0))
+            })
+        } else {
+            document.getElementsByClassName('arrow-down')[0].style.display = ''
+            json = json.sort(function(a,b) {
+                var x = a['name']
+                var y = b['name']
+                return ((x > y) ? -1 : ((x < y) ? 1 : 0))
+            })
+
+        }
+
+        // append json data in table
+        document.getElementById('json-content').innerHTML = ''
+        appendJson(json)
+
+
+    }
+
+    // append tr in table
+    function appendJson(json) {
+        var div = document.getElementById('json-content')
+        json.forEach(function(user) {
+            var elem = document.createElement('tr')
+            var child = document.createElement('td')
+            var child2 = document.createElement('td')
+            child.innerHTML = user.name
+            child2.innerHTML = user.age
+            elem.append(child, child2)
+            elem.classList.add('text-info')
+            div.appendChild(elem)
+        })
+    }
+</script>
+</body>
+</html>
